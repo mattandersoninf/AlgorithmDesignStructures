@@ -1,6 +1,9 @@
 import random
 import subprocess
 
+# remember to incoporate 
+# def __init__(self, val, left=None, right=None):
+# self.__dict__.update({x:k for x, k in locals().items() if x != 'self'})
 class node(object):
   # initialize a node with key and a a set velue
   def init(self, key, value):
