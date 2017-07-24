@@ -1,6 +1,6 @@
 # remember to incoporate
 # self.__dict__.update({x:k for x, k in locals().items() if x != 'self'})
-class node(object):
+class Node(object):
   # initialize a node with key and a a set velue
   def __init__(self, val, left=None, right=None):
     self.val = val
@@ -22,36 +22,35 @@ class node(object):
 # balanced binary search tree class
 class balancedBinarySearchTree(object):
   # initialize object with a root and size
+  # the root is the top element within your binary tree
   def __init__(self, root=None, size =0):
     self.root = root
     self.size =  0
   
-  # check if a value is in a tree
-  def search(self, val):
-    node = node(val)
-    return inTree(self, node)
-  
-  # check if a node value is in the tree
-  def search(self, node):
+  # check if a node is in the tree
+  def search(self, n, node = Node(n)):
     nodeLocation = 0
     parent = None
     if self is None
       return False
     elif (node.val == self.val):
       if parent == None:
-        print('This number is the root')
+        print("This number is the root")
         return True
       else:
+        print("This number is a child of "+str(parent.root.val))
         return True
     elif (node.val < self.root.val and self.root.left != None):
+      parent = self.root
       return self.inTree(self.root.left, node)
     elif (node.val > self.root.val and self.root.right != None):
+      parent = self.root
       return self.inTree(self.root.right, node)
     else:
       return False
     
   # insert a node into the tree
-  def insert(self, node):
+  def insert(self, n, node):
     if self.root is None:
         self.root = node
         size += 1
