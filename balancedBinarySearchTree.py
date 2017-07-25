@@ -1,5 +1,6 @@
 
-# refernece for dict structure, self.__dict__.update({x:k for x, k in locals().items() if x != 'self'})
+# refernece for dict structure
+# self.__dict__.update({x:k for x, k in locals().items() if x != 'self'})
 class Node(object):
   # initialize a node with key and a a set velue
   def __init__(self, val, left=None, right=None):
