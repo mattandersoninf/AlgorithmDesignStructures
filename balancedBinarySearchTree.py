@@ -1,9 +1,12 @@
 
 # refernece for dict structure
 # self.__dict__.update({x:k for x, k in locals().items() if x != 'self'})
+# https://stackoverflow.com/questions/12191075/is-there-a-shortcut-for-self-somevariable-somevariable-in-a-python-class-con
+# use above link for reference
 class Node(object):
   # initialize a node with key and a a set velue
   def __init__(self, val, left=None, right=None):
+    self.__dict__.update({x:k for x, k in locals().items() if x != 'self'})
     self.val = val
     self.right = right
     self.left =  left
