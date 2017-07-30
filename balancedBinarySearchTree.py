@@ -1,5 +1,6 @@
 
 # refernece for dict structure
+# update
 # self.__dict__.update({x:k for x, k in locals().items() if x != 'self'})
 # https://stackoverflow.com/questions/12191075/is-there-a-shortcut-for-self-somevariable-somevariable-in-a-python-class-con
 # use above link for reference
