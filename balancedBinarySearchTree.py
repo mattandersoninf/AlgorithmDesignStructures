@@ -232,6 +232,27 @@ class rbtree(object):
                 
         num_black, is_ok = is_red_black_node(self.root)
         return is_ok and not self.root._red
+
+def preorder(tree):
+    if tree:
+        print(tree._p)
+        preorder(tree._left)
+        preorder(tree._right)
+
+
+def postorder(tree):
+    if tree != None:
+        postorder(tree._left)
+        postorder(tree._right)
+        print(tree._p)
+
+        
+def inorder(tree):
+  if tree != None:
+      inorder(tree._left)
+      print(tree._p)
+      inorder(tree._right)
+
                 
 
 
@@ -262,9 +283,7 @@ def write_tree_as_dot(t, f, show_nil=False):
     print >> f, "// Created by rbtree.write_dot()"
     print >> f, "digraph red_black_tree {"
     visit_node(t.root)
-    print >> f, "}"
-
-
+    print >> f, "}"   
 
 
 def test_tree(t, keys):
