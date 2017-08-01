@@ -233,6 +233,8 @@ class rbtree(object):
         num_black, is_ok = is_red_black_node(self.root)
         return is_ok and not self.root._red
 
+    
+# tree traversals
 def preorder(tree):
     if tree:
         print(tree._p)
@@ -314,3 +316,9 @@ if '__main__' == __name__:
     t = rbtree()
     test_tree(t, keys)
     write_tree(t, 'tree')
+    # test tree traversal
+    preorder(t)
+    postorder(t)
+    inorder(t)
+
+ 
