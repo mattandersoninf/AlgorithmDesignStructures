@@ -1,5 +1,6 @@
 #http://code.activestate.com/recipes/576817-red-black-tree/
-
+# insert, delete, search methods for tree node
+# node should have parent, left child, right child
 
 class rbnode(object):
     """
@@ -255,9 +256,7 @@ def inorder(tree):
       print(tree._p)
       inorder(tree._right)
 
-                
-
-
+        
 
 def write_tree_as_dot(t, f, show_nil=False):
     "Write the tree in the dot language format to f."
