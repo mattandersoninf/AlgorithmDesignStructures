@@ -159,7 +159,7 @@ class rbtree(object):
         self.root._red = False
         
     # delete node from tree
-    def _delete_key(self, z):
+    def delete_node(self, z):
         if self._key == z:
         # found the node we need to delete
             if self._right and self._left: 
