@@ -2,193 +2,111 @@
 # insert, delete, search methods for tree node
 # node should have parent, left child, right child
 
-class rbnode(object):
-    """
-    A node in a red black tree. See Cormen, Leiserson, Rivest, Stein 2nd edition pg 273.
-    """
-    # initialize a node of a red and black tree by giving it a value(key) left and right children
-    # and an extra bit to track whether this node is balanced (red boolean)
-    
-    def __init__(self, key, red = False, left = None, right = None, p = None):
-        "Construct."
-        self._key = key
-        self._red = red
-        self._left = left
-        self._right = right
-        self._p = p
-    
-    key = property(fget=lambda self: self._key, doc="The node's key")
-    red = property(fget=lambda self: self._red, doc="Is the node red?")
-    left = property(fget=lambda self: self._left, doc="The node's left child")
-    right = property(fget=lambda self: self._right, doc="The node's right child")
-    p = property(fget=lambda self: self._p, doc="The node's parent")
-    
-    def __str__(self):
-        "String representation."
-        return str(self.key)
-    
+class RedBlackNode:
+    def __init__(self, val = None, r = None, l = None, p = None, red = None):
+        self.v = val                # value in node
+        self.r = r                  # right child
+        self.l = l                  # left child
+        self.p = p                  # parent node
+        self.red = red              # red boolean to keep track of balance
 
-    def __repr__(self):
-        "String representation."
-        return str(self.key)
+class Tree:
+    def __init__(self):
+        self.root = None
 
+    def getRoot(self):
+        return self.root
 
-
-class rbtree(object):
-    """
-    A red black tree. See Cormen, Leiserson, Rivest, Stein 2nd edition pg 273.
-    """
-    
-    
-    def __init__(self, create_node=rbnode):
-        "Construct."
-        
-        self._nil = create_node(key=None)
-        "Our nil node, used for all leaves."
-        
-        self._root = self.nil
-        "The root of the tree."
-        
-        self._create_node = create_node
-        "A callable that creates a node."
-
-    # base node in the structure
-    root = property(fget=lambda self: self._root, doc="The tree's root node")
-    # null point in the tree
-    nil = property(fget=lambda self: self._nil, doc="The tree's nil node")
-    
-    
-    def search(self, key, x=None):
-        """
-        Search the subtree rooted at x (or the root if not given) iteratively for the key.
-        
-        @return: self.nil if it cannot find it.
-        """
-        if None == x:
-            x = self.root
-        while x != self.nil and key != x.key:
-            if key < x.key:
-                x = x.left
-            else:
-                x = x.right
-        return x
-
-    
-    def minimum(self, x=None):
-        """
-        @return: The minimum value in the subtree rooted at x.
-        """
-        if None == x:
-            x = self.root
-        while x.left != self.nil:
-            x = x.left
-        return x
-
-    
-    def maximum(self, x=None):
-        """
-        @return: The maximum value in the subtree rooted at x.
-        """
-        if None == x:
-            x = self.root
-        while x.right != self.nil:
-            x = x.right
-        return x
-
-    # insert a key value directly into a node    
-    def insert_key(self, key):
-        "Insert the key into the tree."
-        self.insert_node(self._create_node(key=key))
-    
-    # creates node to put a node into the tree, can put a node with a value already implemented using the
-    # function directly above
-    def insert_node(self, z):
-        "Insert node z into the tree."
-        y = self.nil
-        x = self.root
-        while x != self.nil:
-            y = x
-            if z.key < x.key:
-                x = x.left
-            else:
-                x = x.right
-        z._p = y
-        if y == self.nil:
-            self._root = z
-        elif z.key < y.key:
-            y._left = z
+    def insert(self, val):
+        if(self.root == None):
+            self.root = RedBlackNode(val)
         else:
-            y._right = z
-        z._left = self.nil
-        z._right = self.nil
-        z._red = True
-        self._insert_fixup(z)
-        
-    # balance the tree after inserting a node    
-    def _insert_fixup(self, z):
-        "Restore red-black properties after insert."
-        while z.p.red:
-            if z.p == z.p.p.left:
-                y = z.p.p.right
-                if y.red:
-                    z.p._red = False
-                    y._red = False
-                    z.p.p._red = True
-                    z = z.p.p
-                else:
-                    if z == z.p.right:
-                        z = z.p
-                        self._left_rotate(z)
-                    z.p._red = False
-                    z.p.p._red = True
-                    self._right_rotate(z.p.p)
+            self._insert(val, self.root)
+
+    def _insert(self, val, node):
+        if node.p == None:
+            node.p = node
+        if(val < node.v):
+            if(node.l != None):
+                self._insert(val, node.l)
             else:
-                y = z.p.p.left
-                if y.red:
-                    z.p._red = False
-                    y._red = False
-                    z.p.p._red = True
-                    z = z.p.p
-                else:
-                    if z == z.p.left:
-                        z = z.p
-                        self._right_rotate(z)
-                    z.p._red = False
-                    z.p.p._red = True
-                    self._left_rotate(z.p.p)
-        self.root._red = False
+                node.l = Node(val)
+        else:
+            if(node.r != None):
+                self._insert(val, node.r)
+            else:
+                node.r = Node(val)
+
+    def search(self, val):
+        if(self.root != None):
+            return self._search(val, self.root)
+        else:
+            return None
+
+    def _search(self, val, node):
+        if(val == node.v):
+            return node
+        elif(val < node.v and node.l != None):
+            self._search(val, node.l)
+        elif(val > node.v and node.r != None):
+            self._search(val, node.r)
+
+    # return minimum value in tree
+    def min(self):
+        if self.root == None:
+            return None
+        else:
+           return self._min(self.root)
+    
+    def _min(self, node):
+        while node.l != None:
+            self._min(node.l)
+        return node
+
+    # return maximum value in tree
+    def max(self):
+        if self.root == None:
+            return None
+        else:
+           return _max(self.root)
+    
+    def _max(self, node):
+        while node.r != None:
+            _max(node.r)
+        return node
         
     # delete node from tree
-    def delete_node(self, z):
-        if self._key == z:
-        # found the node we need to delete
-            if self._right and self._left: 
-                # get the successor node and its parent 
-                [psucc, succ] = self._right.minimum(self)
-                # splice out the successor
-                # (we need the parent to do this) 
-                if psucc.left == succ:
-                    psucc.left = succ.right
-                else:
-                    psucc.right = succ.right
-                # reset the left and right children of the successor
-                succ.left = self.left
-                succ.right = self.right
-                return succ                
-            else:
-                # "easier" case
-                if self._left:
-                    return self._left    # promote the left subtree
-                else:
-                    return self._right   # promote the right subtree 
+    def delete(self, val):
+        if self == None:
+            return None
         else:
-            if self._key > z:          # key should be in the left subtree
-                if self._left:
-                    self._left = self._left.delete(z)
-                # else the key is not in the tree 
-            else:                       # key should be in the right subtree
-                if self._right:
-                    self._right = self._right.delete(z)
+            return self._delete(
+    
+    
+    def _delete(self, node):
+        if node.left == None:
+            self.transplant(node, node.right)
+        elif node.right == None:
+            self.transplant(node, node.left)
+        else:
+            succ = self.minimum(node.right)
+            if succ.p != node:
+                self.transplant(succ, succ.right)
+                succ.right = node.right
+                succ.right.p = succ
+            self.transplant(node, succ)
+            succ.left = node.left
+            succ.left.p = succ
+
+    def transplant(self, node, newnode):
+        if node.p == None:
+            self.root = newnode
+        elif node == node.p.left:
+            node.p.left = newnode
+        else:
+            node.p.right = newnode
+        if newnode != None:
+            newnode.p = node.p
             
             
             
