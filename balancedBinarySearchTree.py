@@ -6,6 +6,8 @@ class rbnode(object):
     """
     A node in a red black tree. See Cormen, Leiserson, Rivest, Stein 2nd edition pg 273.
     """
+    # initialize a node of a red and black tree by giving it a value(key) left and right children
+    # and an extra bit to track whether this node is balanced (red boolean)
     
     def __init__(self, key, red = False, left = None, right = None, p = None):
         "Construct."
@@ -50,8 +52,9 @@ class rbtree(object):
         self._create_node = create_node
         "A callable that creates a node."
 
-
+    # base node in the structure
     root = property(fget=lambda self: self._root, doc="The tree's root node")
+    # null point in the tree
     nil = property(fget=lambda self: self._nil, doc="The tree's nil node")
     
     
@@ -92,12 +95,13 @@ class rbtree(object):
             x = x.right
         return x
 
-    
+    # insert a key value directly into a node    
     def insert_key(self, key):
         "Insert the key into the tree."
         self.insert_node(self._create_node(key=key))
     
-    
+    # creates node to put a node into the tree, can put a node with a value already implemented using the
+    # function directly above
     def insert_node(self, z):
         "Insert node z into the tree."
         y = self.nil
@@ -120,7 +124,7 @@ class rbtree(object):
         z._red = True
         self._insert_fixup(z)
         
-        
+    # balance the tree after inserting a node    
     def _insert_fixup(self, z):
         "Restore red-black properties after insert."
         while z.p.red:
@@ -153,8 +157,45 @@ class rbtree(object):
                     z.p.p._red = True
                     self._left_rotate(z.p.p)
         self.root._red = False
-
-    
+        
+    # delete node from tree
+    def _delete_key(self, z):
+        if self._key == z:
+        # found the node we need to delete
+            if self._right and self._left: 
+                # get the successor node and its parent 
+                [psucc, succ] = self._right.minimum(self)
+                # splice out the successor
+                # (we need the parent to do this) 
+                if psucc.left == succ:
+                    psucc.left = succ.right
+                else:
+                    psucc.right = succ.right
+                # reset the left and right children of the successor
+                succ.left = self.left
+                succ.right = self.right
+                return succ                
+            else:
+                # "easier" case
+                if self._left:
+                    return self._left    # promote the left subtree
+                else:
+                    return self._right   # promote the right subtree 
+        else:
+            if self._key > z:          # key should be in the left subtree
+                if self._left:
+                    self._left = self._left.delete(z)
+                # else the key is not in the tree 
+            else:                       # key should be in the right subtree
+                if self._right:
+                    self._right = self._right.delete(z)
+            
+            
+            
+            
+            
+            
+    # rotate values left within a subtree about node x
     def _left_rotate(self, x):
         "Left rotate x."
         y = x.right
@@ -171,7 +212,7 @@ class rbtree(object):
         y._left = x
         x._p = y
 
-
+    # rotate values right within a subtree about node x
     def _right_rotate(self, y):
         "Left rotate y."
         x = y.left
@@ -188,7 +229,7 @@ class rbtree(object):
         x._right = y
         y._p = x
 
-
+    # make sure the tree is balanced
     def check_invariants(self):
         "@return: True iff satisfies all criteria to be red-black tree."
         
@@ -233,38 +274,6 @@ class rbtree(object):
                 
         num_black, is_ok = is_red_black_node(self.root)
         return is_ok and not self.root._red
-
-
-        
-
-def write_tree_as_dot(t, f, show_nil=False):
-    "Write the tree in the dot language format to f."
-    def node_id(node):
-        return 'N%d' % id(node)
-    
-    def node_color(node):
-        if node.red:
-            return "red"
-        else:
-            return "black"
-    
-    def visit_node(node):
-        "Visit a node."
-        print >> f, "  %s [label=\"%s\", color=\"%s\"];" % (node_id(node), node, node_color(node))
-        if node.left:
-            if node.left != t.nil or show_nil:
-                visit_node(node.left)
-                print >> f, "  %s -> %s ;" % (node_id(node), node_id(node.left))
-        if node.right:
-            if node.right != t.nil or show_nil:
-                visit_node(node.right)
-                print >> f, "  %s -> %s ;" % (node_id(node), node_id(node.right))
-             
-    print >> f, "// Created by rbtree.write_dot()"
-    print >> f, "digraph red_black_tree {"
-    visit_node(t.root)
-    print >> f, "}"   
-
 
 def test_tree(t, keys):
     "Insert keys one by one checking invariants and membership as we go."
