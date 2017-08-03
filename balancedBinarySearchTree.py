@@ -75,6 +75,7 @@ class Tree:
             _max(node.r)
         return node
         
+    # bruh
     # delete node from tree
     def delete(self, val):
         if self == None:
