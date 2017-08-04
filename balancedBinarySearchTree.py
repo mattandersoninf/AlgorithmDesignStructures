@@ -75,7 +75,6 @@ class Tree:
             _max(node.r)
         return node
         
-    # bruh
     # delete node from tree
     def delete(self, val):
         if self == None:
@@ -85,27 +84,27 @@ class Tree:
     
     
     def _delete(self, node):
-        if node.left == None:
-            self.transplant(node, node.right)
-        elif node.right == None:
-            self.transplant(node, node.left)
+        if node.l == None:
+            self.transplant(node, node.r)
+        elif node.r == None:
+            self.transplant(node, node.l)
         else:
-            succ = self.minimum(node.right)
+            succ = self.min(node.r)
             if succ.p != node:
-                self.transplant(succ, succ.right)
-                succ.right = node.right
-                succ.right.p = succ
+                self.transplant(succ, succ.r)
+                succ.r = node.right
+                succ.r.p = succ
             self.transplant(node, succ)
-            succ.left = node.left
-            succ.left.p = succ
+            succ.l = node.left
+            succ.l.p = succ
 
     def transplant(self, node, newnode):
         if node.p == None:
             self.root = newnode
-        elif node == node.p.left:
-            node.p.left = newnode
+        elif node == node.p.l:
+            node.p.l = newnode
         else:
-            node.p.right = newnode
+            node.p.r = newnode
         if newnode != None:
             newnode.p = node.p
             
