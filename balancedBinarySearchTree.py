@@ -1,7 +1,7 @@
 #http://code.activestate.com/recipes/576817-red-black-tree/
 # insert, delete, search methods for tree node
 
-class RedBlackNode:
+class Node:
     def __init__(self, val = None, r = None, l = None, p = None, red = None):
         self.v = val                # value in node
         self.r = r                  # right child
@@ -18,7 +18,7 @@ class Tree:
 
     def insert(self, val):
         if(self.root == None):
-            self.root = RedBlackNode(val)
+            self.root = Node(val)
         else:
             self._insert(val, self.root)
 
@@ -79,23 +79,19 @@ class Tree:
         if self == None:
             return None
         else:
-            return self._delete(
+            return self._delete(self.root, val)
     
     
-    def _delete(self, node):
-        if node.l == None:
-            self.transplant(node, node.r)
-        elif node.r == None:
-            self.transplant(node, node.l)
+    def _delete(self, node, val):
+        if node == None:
+            return
+        elif node.val != val:
+            if node.val < val:
+                self._delete(node.l,val)
+            else:
+                self._delete(node.r,val)
         else:
-            succ = self.min(node.r)
-            if succ.p != node:
-                self.transplant(succ, succ.r)
-                succ.r = node.right
-                succ.r.p = succ
-            self.transplant(node, succ)
-            succ.l = node.left
-            succ.l.p = succ
+            
 
     def transplant(self, node, newnode):
         if node.p == None:
