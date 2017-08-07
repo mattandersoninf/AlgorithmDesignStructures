@@ -91,6 +91,7 @@ class Tree:
             else:
                 self._delete(node.r,val)
         else:
+            node.p = val
             
 
     def transplant(self, node, newnode):
