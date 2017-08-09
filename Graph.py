@@ -1,6 +1,5 @@
 # graph implemented in python
 # http://www.python-course.eu/graphs_python.php
-# bruh
 
 class Graph(object):
 
