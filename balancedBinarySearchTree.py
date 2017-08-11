@@ -1,5 +1,6 @@
 #http://code.activestate.com/recipes/576817-red-black-tree/
 # insert, delete, search methods for tree node
+#
 
 class Node:
     def __init__(self, val = None, r = None, l = None, p = None, red = None):
