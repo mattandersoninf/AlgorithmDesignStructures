@@ -1,4 +1,3 @@
-#http://code.activestate.com/recipes/576817-red-black-tree/
 # insert, delete, search methods for tree node
 #
 
@@ -18,24 +17,26 @@ class Tree:
         return self.root
 
     def insert(self, val):
+        insertNode = Node(val)
         if(self.root == None):
-            self.root = Node(val)
+            self.root = insertNode
         else:
-            self._insert(val, self.root)
+            self._insert(insertNode, self.root)
 
-    def _insert(self, val, node):
-        if node.p == None:
-            node.p = node
-        if(val < node.v):
-            if(node.l != None):
-                self._insert(val, node.l)
+    def _insert(self, insertNode, parentNode):
+        if parentNode.val > insertNode.val:
+            if parentNode.l != None:
+                insertNode.p = parentNode
+                parentNode.l = insertNode
             else:
-                node.l = Node(val)
+                
+        elif parentNode.val < insertNode.val and parentNode.r != None:
+            insertNode.p = parentNode
+            parentNode.r = insertNode
         else:
-            if(node.r != None):
-                self._insert(val, node.r)
-            else:
-                node.r = Node(val)
+            return
+            
+            
 
     def search(self, val):
         if(self.root != None):
