@@ -1,5 +1,5 @@
 # insert, delete, search methods for tree node
-#
+# blah
 
 class Node:
     def __init__(self, val = None, r = None, l = None, p = None, red = None):
