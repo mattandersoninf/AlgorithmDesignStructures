@@ -1,5 +1,5 @@
 # insert, delete, search methods for tree node
-# blah
+#
 
 class Node:
     def __init__(self, val = None, r = None, l = None, p = None, red = None):
@@ -83,7 +83,7 @@ class Tree:
         else:
             return self._delete(self.root, val)
     
-    
+   #adjust so that the node class does the heavy liftiing 
     def _delete(self, node, val):
         if node == None:
             return
