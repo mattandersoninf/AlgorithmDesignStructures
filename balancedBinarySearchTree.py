@@ -46,16 +46,17 @@ class Tree:
                 self == None
             elif self.l != None and self.r != None:
                 if self.p < self.val:
-                    self.val = self.l
-                    self.l.insert(self.r)
+                    temp = self.r
+                    self = self.l
+                    self.insert(temp)
                 else:
-                    self.val = self.r
-                    self.r.insert(self.l)
+                    temp = self.l
+                    self = self.r
+                    self.insert(temp)
             else:
                 if self.l != None:
                     self.val = self.l
                 else:
                     self.val = self.r
-                    
                     
                     
