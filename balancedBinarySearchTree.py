@@ -1,24 +1,13 @@
 # tree class is initialized with pointers to a parent tree, value, left child and right child
-class Tree:
-   def __init__(self, val = None, r = None, l = None, p = None):
-        self.val = val              # value in node
-        self.r = r                  # right child
-        self.l = l                  # left child
-        self.p = p                  # parent node
+class Node:
+   def __init__(self, val, left=None, right=None):
+   self.__dict__.update({x:k for x, k in locals().items() if x != 'self'})
+
+class Tree():
 
     # insert a new value into the binary search tree
-    def insert(self, newVal, parentVal = None):
-        if self.val == None:
-            self = Tree(newVal)
-            self.p = parentVal
-            print("The value was added to the tree.")
-        elif self.val == newVal:
-            print("This value is already in the tree.")
-        elif self.val > val:
-            insert(self.l, newVal, self.val)
-        else:
-            insert(self.r, newVal, self.val)
-        return
+    def insert(self, newVal):
+        if self.
             
     def search(self, val):
         if self.val == None:
