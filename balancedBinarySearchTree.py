@@ -2,6 +2,12 @@
 class Node:
    def __init__(self, val, left=None, right=None):
    self.__dict__.update({x:k for x, k in locals().items() if x != 'self'})
+   def getValue(self):
+      return self.val
+   def getLeftChild(self):
+      return self.left
+   def getRightChild(self):
+      return self.right
 
 class Tree():
 
