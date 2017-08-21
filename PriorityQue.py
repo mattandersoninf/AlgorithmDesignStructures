@@ -1,2 +1,3 @@
-# demonstrate hungry priority que algorithm
+# demonstrate pritority que data structure in python
 
+class queue
