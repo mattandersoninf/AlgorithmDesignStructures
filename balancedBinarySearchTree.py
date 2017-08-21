@@ -1,3 +1,4 @@
+# make sure that tree class inherits from node
 class Node:
   def __init__(self, val, left=None, right=None):
     self.__dict__.update({x:k for x, k in locals().items() if x != 'self'})
