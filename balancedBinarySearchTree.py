@@ -18,21 +18,16 @@ class Tree(Node):
     if self == None:
       self = Node(newVal)
     else:
-      print("go FUCK yourself")
       print(self.getValue(self))
       print(self.getLeftChild(self))
       print(self.getRightChild(self))
       if self.getValue(self) > newVal and self.getLeftChild(self) == None:
-        print("FUCK OFF1")
         self.left = Tree(newVal)
       elif self.getValue(self) < newVal and self.getRightChild(self) == None:
-        print("FUCK OFF2")
         self.right = Tree(newVal)
       elif self.getValue(self) > newVal and self.getLeftChild(self) != None:
-        print("FUCK OFF 3")
         self.left.insert(newVal)
       else:
-        print("FUCK OFF 4")
         self.right.insert(newVal)
   
   # search for whether or not a value is in the tree
