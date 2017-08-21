@@ -1,57 +1,76 @@
-# tree class is initialized with pointers to a parent tree, value, left child and right child
 class Node:
-   def __init__(self, val, left=None, right=None):
-   self.__dict__.update({x:k for x, k in locals().items() if x != 'self'})
-   def getValue(self):
-      return self.val
-   def getLeftChild(self):
-      return self.left
-   def getRightChild(self):
-      return self.right
-
-class Tree():
-
-    # insert a new value into the binary search tree
-    def insert(self, newVal):
-        if self.
-            
-    def search(self, val):
-        if self.val == None:
-            print("The value " + str(val) + " is not in the tree.")
-        elif self.val == val:
-            print("The value " + str(val) + " is in this tree.")
-            if self.p != None:
-                print("The parent value is " + str(self.p))
-            if self.l != None:
-                print("The left child is " + str(self.l))
-            if self.r != None:
-                print("The right child is " + str(self.r))
-        elif self.val > val:
-            insert(self.l, newVal, self.val)
-        else:
-            insert(self.r, newVal, self.val)
-        return
-        
-    # delete node from tree
-    def delete(self, val):
-        if self.val == None:
-            print("The value " + str(val) + " is not in the tree.")
-        elif self.val == val:
-            if self.l == None and self.r == None:
-                self == None
-            elif self.l != None and self.r != None:
-                if self.p < self.val:
-                    temp = self.r
-                    self = self.l
-                    self.insert(temp)
-                else:
-                    temp = self.l
-                    self = self.r
-                    self.insert(temp)
-            else:
-                if self.l != None:
-                    self.val = self.l
-                else:
-                    self.val = self.r
-                    
+  def __init__(self, val, left=None, right=None):
+    self.__dict__.update({x:k for x, k in locals().items() if x != 'self'})
+  def getValue(self):
+    return self.val
+  def getLeftChild(self):
+    return self.left.getValue()
+  def getRightChild(self):
+    return self.right.getValue()
+    
+class Tree(Node):
+  def __init__(self):
+    super(Tree, self).__init__(self)
+  # insert a new value into the binary search tree
+  @classmethod
+  def insert(self, newVal):
+    if self == None:
+      self = Node(newVal)
+    else:
+      print("go FUCK yourself")
+      print(self.getValue(self))
+      print(self.getLeftChild(self))
+      print(self.getRightChild(self))
+      if self.getValue(self) > newVal and self.getLeftChild(self) == None:
+        print("FUCK OFF1")
+        self.left = Tree(newVal)
+      elif self.getValue(self) < newVal and self.getRightChild(self) == None:
+        print("FUCK OFF2")
+        self.right = Tree(newVal)
+      elif self.getValue(self) > newVal and self.getLeftChild(self) != None:
+        print("FUCK OFF 3")
+        self.left.insert(newVal)
+      else:
+        print("FUCK OFF 4")
+        self.right.insert(newVal)
+  
+  # search for whether or not a value is in the tree
+  @classmethod
+  def search(self, searchVal):
+    if self.val == searchVal:
+      return str(searchVal), " is in the tree."
+    elif searchVal < self.val and self.left != None:
+      return self.left.search(searchVal)
+    elif searchVal > self.val and self.right != None:
+      return right.search(searchVal)
+    else:
+      return str(searchVal), " is not in the tree."
+  
+  # delete a value from the tree
+  @classmethod
+  def delete(self, delVal):
+    if self.val == delVal and self.left == None and self.right == None:
+      self = None
+    elif self.val == delVal and self.left != None and self.right == None:
+      self = self.left
+    elif self.val == delVal and self.left == None and self.right != None:
+      self = self.right
+    elif self.val == delVal and self.left != None and self.right != None:
+      temp = self.right
+      self = self.left
+      self.insert(temp)
+    return
+    
+mainTree = Tree(3)
+print(mainTree.getValue())
+mainTree.insert(2)
+mainTree.insert(4)
+print(mainTree.getRightChild())
+print(mainTree.getLeftChild())
+mainTree.insert(5)
+mainTree.search(2)
+mainTree.delete(2)
+mainTree.search(2)
+mainTree.insert(1)
+mainTree.search(1)
                     
