@@ -83,7 +83,6 @@ mainTree.insert(3)
 print(mainTree.search(3).val)
 mainTree.delete(3)
 print(mainTree.search(3))
-
 """
 mainTree.insert(2)
 mainTree.insert(4)
