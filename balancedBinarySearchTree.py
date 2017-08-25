@@ -11,8 +11,10 @@ class Node:
   def getAll(self): return [self.getValue(), self.getLeftChild(), self.getRightChild()]
     
 class Tree():
-  def __init__(self, root = Node(None)):
+  def __init__(self, root, nil = Node()):
     self.__dict__.update({x:k for x, k in locals().items() if x != 'self'})
+    root = nil
+    self.root = root
   
   def getRoot(self):
     return self.root
