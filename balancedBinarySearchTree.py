@@ -13,9 +13,7 @@ class Node:
 class Tree():
   def __init__(self, root, nil = Node()):
     self.__dict__.update({x:k for x, k in locals().items() if x != 'self'})
-    root = nil
-    self.root = root
-  
+    
   def getRoot(self):
     return self.root
   
@@ -23,68 +21,60 @@ class Tree():
     self.root = newNode
   
   # insert a new value into the binary search tree
-  def insert(self, newVal, currNode = None):
-    if currNode == None:
-      currNode = self.root
-    if currNode.val == None:
-      currNode.setValue(newVal)
-      print(str(newVal)+" was inserted.")
-    elif currNode.val == newVal:
-      print(str(newVal)+" is already in the tree")
-    elif currNode.getValue() > newVal and currNode.left == None:
-      currNode.setLeftChild(newVal)
-      print(str(newVal)+" was inserted.")
-    elif currNode.getValue() > newVal and currNode.left != None:
-      self.insert(newVal, currNode.left)
-    elif currNode.getValue() < newVal and currNode.right == None:
-      currNode.setRightChild(newVal)
-      print(str(newVal)+" was inserted.")
-    elif currNode.getValue() < newVal and currNode.right != None:
-      self.insert(newVal, currNode.right)
-      
+  def insert(self, root, newNode):
+    if self.search(root.val) != None:
+      if root == None:
+        root = newNode
+      else:
+        if root.val < newNode.val:
+          if root.right is None: root.right = newNode
+          else: self.insert(root.right, newNode)
+        else:
+          if root.left is None: root.left = newNode
+          else: self.insert(root.left, newNode)
+    else:
+      print(str(newNode.val) + " is already in the tree.")
+    
+    
+   
   # search for whether or not a value is in the tree
   def search(self, searchVal, currNode = None):
-    print("search started")
     # start by checking if you're looking at nothing, if so, point to the root of your tree
-    if self.root == None:
-      return None
-    else:
+    if currNode == None:
       currNode = self.root
-    # if the value of the node that you are currently looking at is equal to the searchVal, return that node
-    if currNode.val == searchVal:
-      return currNode
-    # if the value of the current node is greater than the searchVal and the left child isn't empty, search that node's properties
-    elif currNode.getValue() > searchVal and currNode.left != None:
-      return self.search(searchVal, currNode.left)
-    # if the value of the current node is greater than the searchVal and the right child isn't empty, search that node's properties
-    elif currNode.getValue() < searchVal and currNode.right != None:
-      return self.search(searchVal, currNode.right)
-    # the value must not be in the tree if you've reached this condition
-    else:
+    if currNode == None:
       return None
-  
-  # delete a value from the tree
-  def delete(self, delVal, currNode = None):
-    if self.root != None:
-      if self.search(delVal) == None:
-        print(str(delVal)+" isn't in the tree")
-      else:
-        elif self.root == delVal:
-          self.root = None
-        elif self.root > delVal and self.root.left != None:
-          self.delete(delVal, self.root.left)
-        elif self.root < delVal and self.root.right != None:
-          self.delete(delVal, self.root.right)
     else:
-      print("Tree nonexistent.")
+      # if the value of the node that you are currently looking at is equal to the searchVal, return that node
+      if currNode.val == searchVal:
+        return currNode
+      elif currNode.val == None:
+        return None
+      # if the value of the current node is greater than the searchVal and the left child isn't empty, search that node's properties
+      elif currNode.val > searchVal and currNode.left != None:
+        return self.search(searchVal, currNode.left)
+      # if the value of the current node is greater than the searchVal and the right child isn't empty, search that node's properties
+      elif currNode.val < searchVal and currNode.right != None:
+        return self.search(searchVal, currNode.right)
+      # the value must not be in the tree if you've reached this condition
       
+  """
+  # delete a value from the tree
+  def delete(self, root,  delNode):
+    if self.search(delNode.val) != None:
+      
+    else:
+      print(str(delNode.val)+" is not in the tree.")
+  """   
     
-mainTree = Tree()
+mainTree = Tree(Node(3))
 print(mainTree.root)
-mainTree.insert(3)
-print(mainTree.search(3).val)
-mainTree.delete(3)
-print(mainTree.search(3))
+print(str(mainTree.search(3)) +" means 3 init works.")
+mainTree.insert(mainTree.root, Node(2))
+print(str(mainTree.search(2))+" means 2 insert works")
+mainTree.insert(mainTree.root, Node(1))
+print(str(mainTree.search(1))+" means 1 insert works")
+print(str(mainTree.search(4))+" means 4 insert works")
 """
 mainTree.insert(2)
 mainTree.insert(4)
