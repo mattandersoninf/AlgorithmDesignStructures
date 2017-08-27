@@ -139,8 +139,14 @@ mainTree.deleteVal(mainTree.root, 3)
 print(mainTree.search(3))
 print(mainTree.search(4))
 print(mainTree.search(1))
+mainTree.insert(mainTree.root, Node(7))
 print(str(mainTree.root.left.val)+": if done properly, this should be 1.")
 print(str(mainTree.root.left.right.val)+": if done properly, this should be 4.")
+#mainTree.preorder(mainTree.root)
+#mainTree.inorder(mainTree.root)
+#mainTree.postorder(mainTree.root)
+
+
 """
 mainTree.insert(2)
 mainTree.insert(4)
