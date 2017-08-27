@@ -1,23 +1,34 @@
 class Node:
-  # intialize
+  # intialize node class with an intial value, and predefined left child, right child, and parent values
+  # the parent is fo rthe sake of the deletion method in the tree class
   def __init__(self, val, left=None, right=None, parent = None):
+    # rather than type out each defined attribute of the class, using a dictionary combined with a magic method
+    # accomplishes the same task with only a single line
     self.__dict__.update({x:k for x, k in locals().items() if x != 'self'})
+    # getters and setters for the node attributes
   def getValue(self): return self.val
-  def getLeftChild(self): return self.left.getValue()
-  def getRightChild(self): return self.right.getValue()
+  def getLeftChild(self): return self.left
+  def getRightChild(self): return self.right
+  def getParent(self): return self.parent
   def setValue(self, newVal): self.val = newVal
-  def setLeftChild(self, newVal): self.left = Node(newVal)
-  def setRightChild(self, newVal): self.right = Node(newVal)
-  # 
-  def getAll(self): return [self.getValue(), self.getLeftChild(), self.getRightChild()]
+  def setLeftChild(self, newVal): self.left = newVal
+  def setRightChild(self, newVal): self.right = newVal
+  def setParent(self, newVal): self.parent = newVal
+  # return an array of all the attributes that belong to the node
+  def getAll(self): return [self.val, self.left, self.right, self.parent]
     
 class Tree():
+  # intialize a tree with a root value and use the dictionary and magic methods approach to store the attribute
+  # could expand further if you wish
+  #you should intialize the tree with a Node object
   def __init__(self, root):
     self.__dict__.update({x:k for x, k in locals().items() if x != 'self'})
-    
+  
+  # return the root of the tree
   def getRoot(self):
     return self.root
   
+  # set the value of the tre's root
   def setRoot(self, newNode):
     self.root = newNode
   
@@ -92,21 +103,44 @@ class Tree():
         self.insert(self.root, rightHold)
     else:
       print(str(delVal)+" is not in the tree.")
-    
+  
+  # traverse the tree in preorder
+  def preorder(self, root):
+    if root:
+      print(root.val)
+      self.preorder(root.left)
+      self.preorder(root.right)
+  
+  # traverse the tree nodes and print their values in order
+  def inorder(self, root):
+    if root:
+      self.inorder(root.left)
+      print(root.val)
+      self.inorder(root.right)
+      
+  # traverse the tree nodes in post order    
+  def postorder(self, root):
+    if root:
+      self.postorder(root.left)
+      self.postorder(root.right)
+      print(root.val)
+
+# intial testing to prove insert, search, and delete functions work
 mainTree = Tree(Node(5))
 print(mainTree.root)
 print(mainTree.search(5))
 mainTree.insert(mainTree.root, Node(3))
 print(mainTree.search(3))
 mainTree.insert(mainTree.root, Node(4))
-print(str(mainTree.search(4))+" node for 4")
+print(str(mainTree.search(4))+": node for 4")
 mainTree.insert(mainTree.root, Node(1))
-print(str(mainTree.search(1))+" :node for 1")
+print(str(mainTree.search(1))+": node for 1")
 mainTree.deleteVal(mainTree.root, 3)
 print(mainTree.search(3))
 print(mainTree.search(4))
 print(mainTree.search(1))
-
+print(str(mainTree.root.left.val)+": if done properly, this should be 1.")
+print(str(mainTree.root.left.right.val)+": if done properly, this should be 4.")
 """
 mainTree.insert(2)
 mainTree.insert(4)
