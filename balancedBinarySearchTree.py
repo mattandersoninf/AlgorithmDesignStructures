@@ -1,5 +1,6 @@
 class Node:
-  def __init__(self, val = None, left=None, right=None):
+  # intialize
+  def __init__(self, val, left=None, right=None, parent = None):
     self.__dict__.update({x:k for x, k in locals().items() if x != 'self'})
   def getValue(self): return self.val
   def getLeftChild(self): return self.left.getValue()
@@ -11,7 +12,7 @@ class Node:
   def getAll(self): return [self.getValue(), self.getLeftChild(), self.getRightChild()]
     
 class Tree():
-  def __init__(self, root, nil = Node()):
+  def __init__(self, root):
     self.__dict__.update({x:k for x, k in locals().items() if x != 'self'})
     
   def getRoot(self):
@@ -22,15 +23,20 @@ class Tree():
   
   # insert a new value into the binary search tree
   def insert(self, root, newNode):
+    print("insert started")
     if self.search(root.val) != None:
       if root == None:
         root = newNode
       else:
         if root.val < newNode.val:
-          if root.right is None: root.right = newNode
+          if root.right is None:
+            root.right = newNode
+            root.right.parent = root
           else: self.insert(root.right, newNode)
         else:
-          if root.left is None: root.left = newNode
+          if root.left is None:
+            root.left = newNode
+            root.left.parent = root
           else: self.insert(root.left, newNode)
     else:
       print(str(newNode.val) + " is already in the tree.")
@@ -58,23 +64,49 @@ class Tree():
         return self.search(searchVal, currNode.right)
       # the value must not be in the tree if you've reached this condition
       
-  """
   # delete a value from the tree
-  def delete(self, root,  delNode):
-    if self.search(delNode.val) != None:
-      
+  def deleteVal(self, root,  delVal):
+    leftHold = None
+    rightHold = None
+    if self.search(delVal) != None:
+      while root.val != delVal:
+        if delVal < root.val:
+          root = root.left
+        else:
+          root = root.right
+      if root.left != None:
+        leftHold = root.left
+      if root.right != None:
+        rightHold = root.right
+      if root.parent != None:
+        if root.val < root.parent.val:
+          root.parent.left = None
+        else:
+          root.parent.right = None
+      else:
+        self.root = None
+      print(str(delVal)+" was deleted.")
+      if leftHold != None:
+        self.insert(self.root, leftHold)
+      if rightHold !=None:
+        self.insert(self.root, rightHold)
     else:
-      print(str(delNode.val)+" is not in the tree.")
-  """   
+      print(str(delVal)+" is not in the tree.")
     
-mainTree = Tree(Node(3))
+mainTree = Tree(Node(5))
 print(mainTree.root)
-print(str(mainTree.search(3)) +" means 3 init works.")
-mainTree.insert(mainTree.root, Node(2))
-print(str(mainTree.search(2))+" means 2 insert works")
+print(mainTree.search(5))
+mainTree.insert(mainTree.root, Node(3))
+print(mainTree.search(3))
+mainTree.insert(mainTree.root, Node(4))
+print(str(mainTree.search(4))+" node for 4")
 mainTree.insert(mainTree.root, Node(1))
-print(str(mainTree.search(1))+" means 1 insert works")
-print(str(mainTree.search(4))+" means 4 insert works")
+print(str(mainTree.search(1))+" :node for 1")
+mainTree.deleteVal(mainTree.root, 3)
+print(mainTree.search(3))
+print(mainTree.search(4))
+print(mainTree.search(1))
+
 """
 mainTree.insert(2)
 mainTree.insert(4)
