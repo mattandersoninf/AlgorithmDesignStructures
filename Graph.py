@@ -33,7 +33,9 @@ class Graph:
   # utilize the dictionary to keep track of all the parameters within the Graph
   # eliminates the need for self.parameter = parameter for every parameter in the
   # initializer
-  def __init__(self, vertexDict = {}):
+  # use the matrix parameter to print out all of the vertices and edges for a visual
+  # representation on the console
+  def __init__(self, vertexDict = {}, matrix = None):
     self.__dict__.update({x:k for x, k in locals().items() if x != 'self'})
   
   # add a vertex to the Graph  
@@ -61,3 +63,6 @@ class Graph:
   def getAllConnections(self):
     for v in range(len(vertexDict)):
       
+    
+  def addEdge(self, vertex):
+    
