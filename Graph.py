@@ -1,28 +1,63 @@
+# class structure for vertex, utilizes the value parameter as the key
 # and an array of neighbor nodes
-# Possibly set up a dictionary based on the values with the neighbors as the keys
-# and the weighted paths represent the value parameter
+# Set up the dictionary so that the Vertex will have a key parameter and 
+# a dictionary of neighbors with the neighbor values as the keys
+# and the weight to that neighbor as the associated value
+
 class Vertex:
-    def __init__(self,key):
-        self.id = key
-        self.neighborsList = {}
+  # initializer for the dictionary which will use the vertex's id as the key value
+  # use the neighborsList dictionary as  
+  def __init__(self,key):
+      self.id = key
+      self.neighborsList = {}
+      
+  # add a neighbor by setting the key parameter in the neighbor list dictionary
+  # with it's weight to getting to the key as the value associated in the dictionary
+  def addNeighbor(self,nbr,weight=0):
+      self.neighborsList[nbr] = weight
 
-    def addNeighbor(self,nbr,weight=0):
-        self.neighborsList[nbr] = weight
+  # get all the neighbors associated with this vertex
+  def getConnections(self):
+      return self.adjencyList.keys()
 
-    def getConnections(self):
-        return self.adjencyList.keys()
-
-    def getId(self):
-        return self.id
-
-    def getWeight(self,nbr):
-        return self.adjencyList[nbr]
+  # return the vertex's object id
+  def getId(self):
+      return self.id
+      
+  # return the weight associated with a specific neighbor to this vertex    
+  def getWeight(self,nbr):
+      return self.adjencyList[nbr]
 
 # class structure for graph  
 class Graph:
-  def __init__(self, vertexDict = {}, directed = False):
+  # utilize the dictionary to keep track of all the parameters within the Graph
+  # eliminates the need for self.parameter = parameter for every parameter in the
+  # initializer
+  def __init__(self, vertexDict = {}):
     self.__dict__.update({x:k for x, k in locals().items() if x != 'self'})
+  
+  # add a vertex to the Graph  
+  def addVertex(self, value):
+    # you can't add values to a key in a dictionary if it already exists, so track
+    # the Exception
+    if value in self.vertexDict:
+      raise Exception(str(value) + " is already in this Graph.")
     
-  def addVertex(self, vertex):
-    vertexDict[vertex.value] = vertex.neighbors
+    # given a key value, make a new vertex and treat that value as the key to connect to
+    # that value
+    newVertex = Vertex(value)
+    self.vertexDict[value] = newVertex
     
+  def addEdge(self, vertexKey1, vertexKey2, weight = 0):
+    if vertexKey1 not in self.vertexDict:
+      self.vertexDict[vertexKey1] = Vertex(vertexKey1)
+    if vertexKey2 not in self.vertexDict:
+      self.vertexDict[vertexKey2] = Vertex(vertexKey2)
+    self.vertexDict[vertexKey1].addNeighbor(vertexKey2, weight)
+    
+  def getVertices(self):
+    return self.vertexDict.keys()
+    
+  def getAllConnections(self):
+    for v in range(len(vertexDict)):
+      
