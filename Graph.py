@@ -68,7 +68,5 @@ class Graph:
         # print a tring that shows each connection with each vertex
         print("( %s , %s )" % (v.getId(), w.getId()))
       
-      
-    
   def addEdge(self, vertex):
-    
+    # test commit to github through Jupyter
