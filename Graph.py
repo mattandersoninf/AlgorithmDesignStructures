@@ -61,7 +61,13 @@ class Graph:
     return self.vertexDict.keys()
     
   def getAllConnections(self):
-    for v in range(len(vertexDict)):
+    # loop through all of the vertices associated with this graph
+    for v in range(len(self.vertexDict)):
+      # loop through all of the connections in each vertex array
+      for w in v.getConnections():
+        # print a tring that shows each connection with each vertex
+        print("( %s , %s )" % (v.getId(), w.getId()))
+      
       
     
   def addEdge(self, vertex):
