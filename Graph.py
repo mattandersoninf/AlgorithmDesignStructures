@@ -29,7 +29,7 @@ class Vertex:
       return self.neighborsList[nbr]
 
 # class structure for graph  
-class Graph:
+class Graph(object):
   # utilize the dictionary to keep track of all the parameters within the Graph
   # eliminates the need for self.parameter = parameter for every parameter in the
   # initializer
