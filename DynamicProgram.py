@@ -1,6 +1,6 @@
 # python implementation of dynamic progrmming
 # first method include Fibonacci implementation
-class DynamicProgram:
+class DynamicProgram(object):
     def __init__(self, memo ={}):
         self.__dict__.update({x:k for x, k in locals().items() if x != 'self'})
         
@@ -15,8 +15,3 @@ class DynamicProgram:
         result = self.fib(n -1) + self.fib(n-2)
         self.memo[n] = result
         return result
-
-dynProg = DynamicProgram()
-result2 = dynProg.fib(2)
-result5 =dynProg.fib(11)
-print(result5)
