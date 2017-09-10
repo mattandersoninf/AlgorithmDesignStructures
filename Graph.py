@@ -29,8 +29,11 @@ class Vertex:
     # set the visited parameter to true
     def setVisitTrue(self):self.visited = True
     
-    #set the visited parameter to false
+    # set the visited parameter to false
     def setVisitFalse(self):self.visited = False
+    
+    # delete a neighbor value and it's weight in the neighborsList dictionary
+    def delNeighbor(self,value): del self.neighborsList[value]
 
 # class structure for graph  
 class Graph(object):
@@ -64,7 +67,25 @@ class Graph(object):
             self.vertexDict[vertexKey1].addNeighbor(vertexKey1, weight1)
         else:
             self.vertexDict[vertexKey1].addNeighbor(vertexKey1, weight1)
-            self.vertexDict[vertexKey2].addNeighbor(vertexKey2, weight2)      
+            self.vertexDict[vertexKey2].addNeighbor(vertexKey2, weight2)
+            
+    # delete vertx value from the graph's vertex dictionary
+    def delVertex(self, value):
+        # delete the specified key value from the vertex dictionary of the graph
+        del self.vertDict[value]
+        # delete this value from all of the vertices' neihborsLists
+        for v in self.vertDict:
+            if value in vertDict[v].neighborsList:
+                vertDict[v].delNeigbor(value)
+        
+    def delEdge(self, vertexKey1, vertexKey2):
+        # delete the neighbor
+        if vertexKey2 in self.vertDict[vertexKey1].neighborsList:
+            self.vertDict[vertexKey1].delNeighbor(vertexKey2)
+        # if the second key isn't even a neighbor to the first vertex, let the user know
+        else:
+            print(str(vertexKey2)+" is not already a neighbor of "+str(vertexKey1)+".")
+        
   
     # return and array of all of the vertices in the Graph by accessing
     # the keys in the vertexDict
