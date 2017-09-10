@@ -41,7 +41,6 @@ class Graph(object):
     # eliminates the need for self.parameter = parameter for every parameter in the
     # initializer in case you want to add more parameters
     def __init__(self, vertDict = {}):
-        self.vertDict = vertDict
         self.__dict__.update({x:k for x, k in locals().items() if x != 'self'})
   
     # add a vertex object to vertDict in the Graph class 
@@ -61,12 +60,8 @@ class Graph(object):
     def addEdge(self, vertexKey1, vertexKey2, weight1 = 0, weight2 = None):
         # If the specified vertex values aren't in the Graph already
         # add them to the vertDict
-        if vertexKey1 not in self.vertDict:
-            self.addVertex(vertexKey1)
-            
-        if vertexKey2 not in self.vertDict:
-            self.addVertex(vertexKey2)
-            
+        if vertexKey1 not in self.vertDict: self.addVertex(vertexKey1)
+        if vertexKey2 not in self.vertDict: self.addVertex(vertexKey2)
         # check if there was a second weight which will make this path undirected
         if weight2 == None:
             self.vertDict[vertexKey1].addNeighbor(self.vertDict[vertexKey2], weight1)
