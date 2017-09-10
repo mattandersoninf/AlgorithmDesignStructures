@@ -44,47 +44,46 @@ class Graph(object):
         self.__dict__.update({x:k for x, k in locals().items() if x != 'self'})
   
     # add a vertex object to vertDict in the Graph class 
-    def addVertex(self, value):
+    def addVertex(self, v):
         # you can't add values to a key in a dictionary if it already exists, so track
         # the Exception
-        if value in self.vertDict:
-            raise Exception(str(value) + " is already in this Graph.")
+        if v in self.vertDict:
+            raise Exception(str(v) + " is already in this Graph.")
         # given a key value, make a new vertex and treat that value as the key to connect to
         # that value
-        newVertex = Vertex(value)
-        self.vertDict[value] = newVertex
+        newVertex = Vertex(v)
+        self.vertDict[v] = newVertex
 
     # Add an edge to the Graph class, inputs should be 2 integer values
     # A weight can be specified to the path otherwise the weight will be 
     # set to 0  
-    def addEdge(self, vertexKey1, vertexKey2, weight1 = 0, weight2 = None):
+    def addEdge(self, v1, v2, weight1 = 0, weight2 = None):
         # If the specified vertex values aren't in the Graph already
         # add them to the vertDict
-        if vertexKey1 not in self.vertDict: self.addVertex(vertexKey1)
-        if vertexKey2 not in self.vertDict: self.addVertex(vertexKey2)
+        if v1 not in self.vertDict: self.addVertex(v1)
+        if v2 not in self.vertDict: self.addVertex(v2)
         # check if there was a second weight which will make this path undirected
         if weight2 == None:
-            self.vertDict[vertexKey1].addNeighbor(self.vertDict[vertexKey2], weight1)
+            self.vertDict[v1].addNeighbor(self.vertDict[v2], weight1)
         else:
-            self.vertDict[vertexKey1].addNeighbor(self.vertDict[vertexKey1], weight1)
-            self.vertDict[vertexKey2].addNeighbor(self.vertDict[vertexKey2], weight2)
+            self.vertDict[v1].addNeighbor(self.vertDict[v2], weight1)
+            self.vertDict[v2].addNeighbor(self.vertDict[v1], weight2)
             
     # delete vertx value from the graph's vertex dictionary
     def delVertex(self, value):
-        # delete the specified key value from the vertex dictionary of the graph
-        del self.vertDict[value]
         # delete this value from all of the vertices' neihborsLists
         for v in self.vertDict:
-            if value in self.vertDict[v].neighborsList:
-                self.vertDict[v].delNeigbor(value)
+            if self.vertDict[value] in self.vertDict[v].neighborsList:
+                self.vertDict[v].delNeighbor(self.vertDict[value])
+        # delete the specified key value from the vertex dictionary of the graph
+        del self.vertDict[value]
         
+    # delete an edge from the Graph by removing that vertex object from the
+    # neighbor list
     def delEdge(self, vertexKey1, vertexKey2):
         # delete the neighbor
         if self.vertDict[vertexKey2] in self.vertDict[vertexKey1].neighborsList:
             self.vertDict[vertexKey1].delNeighbor(self.vertDict[vertexKey2])
-        # if the second key isn't even a neighbor to the first vertex, let the user know
-        else:
-            print(str(vertexKey2)+" is not a neighbor of "+str(vertexKey1)+".")
         
   
     # return and array of all of the vertices in the Graph by accessing
@@ -96,3 +95,4 @@ class Graph(object):
         # loop through all of the vertices associated with this graph
         for v in self.vertDict.values():
             for nbr in v.getConnections(): print("Vertex: %s, Neighbor: %s, Edge Weight: %s" % (v.id, nbr.getId(), v.neighborsList[nbr]))
+
