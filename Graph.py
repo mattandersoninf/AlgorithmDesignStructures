@@ -41,9 +41,10 @@ class Graph(object):
     # eliminates the need for self.parameter = parameter for every parameter in the
     # initializer in case you want to add more parameters
     def __init__(self, vertDict = {}):
+        self.vertDict = vertDict
         self.__dict__.update({x:k for x, k in locals().items() if x != 'self'})
   
-    # add a vertex object to vertexDict in the Graph class 
+    # add a vertex object to vertDict in the Graph class 
     def addVertex(self, value):
         # you can't add values to a key in a dictionary if it already exists, so track
         # the Exception
@@ -59,15 +60,19 @@ class Graph(object):
     # set to 0  
     def addEdge(self, vertexKey1, vertexKey2, weight1 = 0, weight2 = None):
         # If the specified vertex values aren't in the Graph already
-        # add them to the vertexDict
-        if vertexKey1 not in self.vertDict: self.addVertex(vertexKey1)
-        if vertexKey2 not in self.vertDict: self.addVertex(vertexKey2)
+        # add them to the vertDict
+        if vertexKey1 not in self.vertDict:
+            self.addVertex(vertexKey1)
+            
+        if vertexKey2 not in self.vertDict:
+            self.addVertex(vertexKey2)
+            
         # check if there was a second weight which will make this path undirected
         if weight2 == None:
-            self.vertexDict[vertexKey1].addNeighbor(vertexKey1, weight1)
+            self.vertDict[vertexKey1].addNeighbor(self.vertDict[vertexKey2], weight1)
         else:
-            self.vertexDict[vertexKey1].addNeighbor(vertexKey1, weight1)
-            self.vertexDict[vertexKey2].addNeighbor(vertexKey2, weight2)
+            self.vertDict[vertexKey1].addNeighbor(self.vertDict[vertexKey1], weight1)
+            self.vertDict[vertexKey2].addNeighbor(self.vertDict[vertexKey2], weight2)
             
     # delete vertx value from the graph's vertex dictionary
     def delVertex(self, value):
@@ -75,20 +80,20 @@ class Graph(object):
         del self.vertDict[value]
         # delete this value from all of the vertices' neihborsLists
         for v in self.vertDict:
-            if value in vertDict[v].neighborsList:
-                vertDict[v].delNeigbor(value)
+            if value in self.vertDict[v].neighborsList:
+                self.vertDict[v].delNeigbor(value)
         
     def delEdge(self, vertexKey1, vertexKey2):
         # delete the neighbor
-        if vertexKey2 in self.vertDict[vertexKey1].neighborsList:
-            self.vertDict[vertexKey1].delNeighbor(vertexKey2)
+        if self.vertDict[vertexKey2] in self.vertDict[vertexKey1].neighborsList:
+            self.vertDict[vertexKey1].delNeighbor(self.vertDict[vertexKey2])
         # if the second key isn't even a neighbor to the first vertex, let the user know
         else:
-            print(str(vertexKey2)+" is not already a neighbor of "+str(vertexKey1)+".")
+            print(str(vertexKey2)+" is not a neighbor of "+str(vertexKey1)+".")
         
   
     # return and array of all of the vertices in the Graph by accessing
-    # the keys in the vertexDict
+    # the keys in the vertDict
     def getVertices(self): return self.vertDict.keys()
   
     # print all of the edges  

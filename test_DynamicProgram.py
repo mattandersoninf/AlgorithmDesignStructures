@@ -1,6 +1,7 @@
 
 import unittest
 import DynamicProgram
+
 class FiboncciTestCase(unittest.TestCase):
     def setUp(self):
         self.dynProgObj = DynamicProgram.DynamicProgram()
@@ -13,4 +14,3 @@ class FiboncciTestCase(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-
