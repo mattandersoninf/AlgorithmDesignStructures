@@ -4,6 +4,8 @@
 # a dictionary of neighbors with the neighbor values as the keys
 # and the weight to that neighbor as the associated value
 
+import collections
+
 class Vertex:
     # initializer for the dictionary which will use the vertex's id as the key value
     # use the neighborsList dictionary as  
@@ -96,3 +98,32 @@ class Graph(object):
         for v in self.vertDict.values():
             for nbr in v.getConnections(): print("Vertex: %s, Neighbor: %s, Edge Weight: %s" % (v.id, nbr.getId(), v.neighborsList[nbr]))
 
+#----------------------------------------------------------------------------------------------------------------------------------------
+    # Unweighted Traversals
+    #
+    def bfs(self, start, val):
+        #
+        if start is None or val is None: return False
+        queue = collections.deque([])
+        queue.append(start)
+        while queue:
+            current_vertex = queue.pop()
+            if current_vertex.id == val:
+                return True
+            if not current_vertex.visited:
+                current_vertex.setVistTrue()
+                for vertex in current_vertex.neighborsList:
+                    queue.appendleft()
+        return False
+    
+    #                
+    def dfs(self, vertex, val):
+        #
+        if not vertex.visited:
+            vertex.setVisitedTrue()
+            if vertex.id == val:
+                return True
+            for neighbor_vertex in vertex.neighborsList:
+                is_found = self.dfs(neighbor_vertex, val)
+                if is_found: return True
+        return False
