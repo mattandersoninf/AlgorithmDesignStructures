@@ -17,6 +17,9 @@ class Vertex:
     # add a neighbor by setting the key parameter in the neighbor list dictionary
     # with it's weight to getting to the key as the value associated in the dictionary
     def addNeighbor(self, nbr, weight = 0):
+        if nbr in self.neighborsList:
+            print(str(nbr)+" is already in the neighborsList of vertex " + str(self.id))
+            return
         self.neighborsList[nbr] = weight
     
     # get all the neighbors associated with this vertex
@@ -50,7 +53,8 @@ class Graph(object):
         # you can't add values to a key in a dictionary if it already exists, so track
         # the Exception
         if v in self.vertDict:
-            raise Exception(str(v) + " is already in this Graph.")
+            print(str(v.id) + " is already in this Graph.")
+            return
         # given a key value, make a new vertex and treat that value as the key to connect to
         # that value
         newVertex = Vertex(v)
@@ -65,8 +69,7 @@ class Graph(object):
         if v1 not in self.vertDict: self.addVertex(v1)
         if v2 not in self.vertDict: self.addVertex(v2)
         # check if there was a second weight which will make this path undirected
-        if weight2 == None:
-            self.vertDict[v1].addNeighbor(self.vertDict[v2], weight1)
+        if weight2 == None: self.vertDict[v1].addNeighbor(self.vertDict[v2], weight1)
         else:
             self.vertDict[v1].addNeighbor(self.vertDict[v2], weight1)
             self.vertDict[v2].addNeighbor(self.vertDict[v1], weight2)
@@ -74,11 +77,13 @@ class Graph(object):
     # delete vertx value from the graph's vertex dictionary
     def delVertex(self, value):
         # delete this value from all of the vertices' neihborsLists
-        for v in self.vertDict:
-            if self.vertDict[value] in self.vertDict[v].neighborsList:
-                self.vertDict[v].delNeighbor(self.vertDict[value])
-        # delete the specified key value from the vertex dictionary of the graph
-        del self.vertDict[value]
+        if value in self.vertDict:
+            for v in self.vertDict:
+                if self.vertDict[value] in self.vertDict[v].neighborsList:
+                    self.vertDict[v].delNeighbor(self.vertDict[value])
+            # delete the specified key value from the vertex dictionary of the graph
+            del self.vertDict[value]
+        else: print(str(value)+" is not in the Graph.")
         
     # delete an edge from the Graph by removing that vertex object from the
     # neighbor list
@@ -86,7 +91,7 @@ class Graph(object):
         # delete the neighbor
         if self.vertDict[vertexKey2] in self.vertDict[vertexKey1].neighborsList:
             self.vertDict[vertexKey1].delNeighbor(self.vertDict[vertexKey2])
-        
+        else: print(str(vertexKey2)+" is not a neighbor of "+str(vertexKey1))
   
     # return and array of all of the vertices in the Graph by accessing
     # the keys in the vertDict
@@ -100,7 +105,9 @@ class Graph(object):
 
 #----------------------------------------------------------------------------------------------------------------------------------------
     # Unweighted Traversals
-    #
+    # breadth first search
+    # visual representation: https://www.hackerearth.com/practice/algorithms/graphs/breadth-first-search/tutorial/
+    # search algorithm for checking all of the neighbors of the current node before traversing
     def bfs(self, start, val):
         #
         if start is None or val is None: return False
@@ -111,19 +118,29 @@ class Graph(object):
             if current_vertex.id == val:
                 return True
             if not current_vertex.visited:
-                current_vertex.setVistTrue()
+                current_vertex.setVisitTrue()
                 for vertex in current_vertex.neighborsList:
-                    queue.appendleft()
+                    queue.appendleft(vertex)
         return False
     
-    #                
+    # depth first search
+    # visual representation: https://www.hackerearth.com/practice/algorithms/graphs/depth-first-search/tutorial/
+    # search algorithm for travsing paths until you have no neighbors then return to the original node 
+    # and try down another path
     def dfs(self, vertex, val):
         #
         if not vertex.visited:
-            vertex.setVisitedTrue()
+            vertex.setVisitTrue()
             if vertex.id == val:
                 return True
             for neighbor_vertex in vertex.neighborsList:
                 is_found = self.dfs(neighbor_vertex, val)
                 if is_found: return True
         return False
+    
+    def searchCleanup(self):
+        for vertex in self.vertDict.values():
+            vertex.setVisitFalse()
+    
+    # def djstrika(self, vertex, value):
+        

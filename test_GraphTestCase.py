@@ -53,7 +53,6 @@ class GraphTestCase(unittest.TestCase):
     def test_5printVertices(self):
         self.graph.printVerticesAndEdges()
     
-    
               
 # main function to run through all of the test function made in the test case
 # use the middle arugrument argv=['first-arg-is-ignored'], exit = False because in ipy/ipynb files
