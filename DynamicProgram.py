@@ -65,9 +65,9 @@ class DynamicProgram(object):
         # return the result
         return result
     
-    # find the number of combinaions you can arrange a coin array to add up to n
-    # before you try using a coin_list as a key, it's not possible because
-    # lists are unhashable
+    # return an integer of the number of combinaions you can arrange a coin 
+    # array to add up to n before you try using a coin_list as a key,
+    # it's not possible because lists are unhashable
     # so it is up the user to please use coins in ascending value
     # ex: if len(coin_array) == 2, the input should be coin_array = [1,5]    
     def coin_change(self, n, coin_array):
@@ -79,6 +79,14 @@ class DynamicProgram(object):
         # base cases
         if n < 0: return 0
         elif n == 1 or n == 0: return 1
-
+        
+        result = 0
+        i = 1
         # backtracking (the baackbone of how this function works)
         
+        
+        # append to cache
+        self.coin_change_memo[n][len(coin_array)] = result
+        
+        #return result
+        return result 
