@@ -13,6 +13,7 @@ class FiboncciTestCase(unittest.TestCase):
         self.assertEqual(self.dynProgObj.fib(100),354224848179261915075)
     def test_climb_stairs3(self):
         print(self.dynProgObj.climb_stairs(4,3))
+        print(self.dynProgObj.climb_stairs(4,3))
 
 if __name__ == '__main__':
     unittest.main()
