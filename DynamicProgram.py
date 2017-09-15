@@ -69,6 +69,7 @@ class DynamicProgram(object):
     # array to add up to n before you try using a coin_list as a key,
     # it's not possible because lists are unhashable
     # so it is up the user to please use coins in ascending value
+    # you can also assume you have an unlimited amount of every coin in coin_array
     # ex: if len(coin_array) == 2, the input should be coin_array = [1,5]    
     def coin_change(self, n, coin_array):
         # check cache
@@ -82,8 +83,11 @@ class DynamicProgram(object):
         
         result = 0
         i = 1
-        # backtracking (the baackbone of how this function works)
         
+        # backtracking (the baackbone of how this function works)
+        while i <= n and i<= len(coin_array):
+            if 
+            
         
         # append to cache
         self.coin_change_memo[n][len(coin_array)] = result
