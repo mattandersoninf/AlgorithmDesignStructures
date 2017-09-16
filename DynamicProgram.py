@@ -81,16 +81,23 @@ class DynamicProgram(object):
         if n < 0: return 0
         elif n == 1 or n == 0: return 1
         
-        result = 0
-        i = 1
+        result = [[]]
+        i = 0
         
-        # backtracking (the baackbone of how this function works)
-        while i <= n and i<= len(coin_array):
-            if 
+         # backtracking (the backbone of how this function works)
+        while i <= len(coin_array):
+            
+            
             
         
         # append to cache
         self.coin_change_memo[n][len(coin_array)] = result
         
         #return result
-        return result 
+        return result
+
+dp = DynamicProgram()    
+print(dp.coin_change(10, [1,5]))
+ 
+ 
+ 
