@@ -72,32 +72,33 @@ class DynamicProgram(object):
     # you can also assume you have an unlimited amount of every coin in coin_array
     # ex: if len(coin_array) == 2, the input should be coin_array = [1,5]    
     def coin_change(self, n, coin_array):
+        print("start n = "+str(n))
+        print("start coin_array = "+str(coin_array))
         # check cache
         if n in self.coin_change_memo:
             if len(coin_array) in self.coin_change_memo[n]:
                 return [n][len(coin_array)]
         
         # base cases
-        if n < 0: return 0
-        elif n == 1 or n == 0: return 1
+        if n < 0:
+            print("0 returned")
+            return 0
+        elif n == 1 or n == 0:
+            print("1 returned")
+            return 1
         
-        result = [[]]
+        result = set()
         i = 0
         
-         # backtracking (the backbone of how this function works)
-        while i <= len(coin_array):
-            
-            
-            
+        # backtracking (the backbone of how this function works)
+        for i in range(len(coin_array)):
+            print("backtrack n = "+str(n))
+            print("backtrack coin_array = "+str(coin_array))
+            result.add(self.coin_change(n-coin_array[i], coin_array))
         
         # append to cache
         self.coin_change_memo[n][len(coin_array)] = result
         
         #return result
-        return result
+        return len(result)
 
-dp = DynamicProgram()    
-print(dp.coin_change(10, [1,5]))
- 
- 
- 
