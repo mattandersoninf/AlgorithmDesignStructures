@@ -17,10 +17,18 @@ class FiboncciTestCase(unittest.TestCase):
         print(self.dynProgObj.climb_stairs(7,3))
     """
     def test_coin_change(self):
-        print(self.dynProgObj.coin_change(2,[1,5]))
-        print(self.dynProgObj.coin_change(6,[1,5]))
-        print(self.dynProgObj.coin_change(7,[1,5]))
-        print(self.dynProgObj.coin_change(11,[1,5]))
+        # combinations = {[1,1]}
+        # answer = len(combinations) = 1
+        self.assertEqual(self.dynProgObj.coin_change(2,[1,5]), 1)
+        # combinations = {[1,1,1,1,1,1], [1,5]}
+        # answer = len(combinations) = 2
+        self.assertEqual(self.dynProgObj.coin_change(6,[1,5]), 2)
+        # combinations = {[1,1,1,1,1,1,1,1,1,1,1], [1,1,1,1,1,1,5], [1,5,5]}
+        # answer = len(combination) = 3
+        self.assertEqual(self.dynProgObj.coin_change(11,[1,5]), 3)
+        # combinations = {[1,1,1,1,1,1,1,1,1,1,1], [1,1,1,1,1,1,5], [1,5,5], [1,10]}
+        # answer = len(combination) = 4
+        self.assertEqual(self.dynProgObj.coin_change(11,[1,5,10]),4)
 
 if __name__ == '__main__':
     unittest.main()
