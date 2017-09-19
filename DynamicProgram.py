@@ -72,14 +72,22 @@ class DynamicProgram(object):
     # you can also assume you have an unlimited amount of every coin in coin_array
     # ex: if len(coin_array) == 2, the input should be coin_array = [1,5]    
     def coin_change(self, n, coin_array):
-        # print("start n = "+str(n))
-        # print("start coin_array = "+str(coin_array))
-        # check cache
+        #  print("start n = "+str(n))
+        #  print("start coin_array = "+str(coin_array))
+        # check cache to cut down on the runtime, if you've already solved this
+        # method for lower "n" values or smaller coin arrays, this function should
+        # be able to recognize and call these solutions in the coin_change memo
         if n in self.coin_change_memo:
             if len(coin_array) in self.coin_change_memo[n]:
+                print("n :",n)
+                print("len(coin_array) :", len(coin_array))
                 return [n][len(coin_array)]
         
         # base cases
+        # you can't have negative coin values so return 0 if "n" goes below 0
+        # 0 and 1 return 1 because there is only way to organize the values
+        # in the coin array (assuming the coin array includes 1) to return
+        # these n values 
         if n < 0:
             # print("0 returned")
             return 0
@@ -87,18 +95,23 @@ class DynamicProgram(object):
             # print("1 returned")
             return 1
         
-        result = set()
-        i = 0
+        # result will adjust to the number of arrays returned from backtracking
+        # side note: find a way to find the lengths without constructiong all of
+        # the arrays for the possible solutions granted the return array have the
+        # potential to become very large
+        result = 0
         
         # backtracking (the backbone of how this function works)
+        # iterate through the values in the coin_array to
+        # currently
         for i in range(len(coin_array)):
-            print("backtrack n = "+str(n))
-            print("backtrack coin_array = "+str(coin_array))
-            result.add(self.coin_change(n-coin_array[i], coin_array))
+            # print("backtrack n = "+str(n))
+            # print("backtrack coin_array = "+str(coin_array))
+            result += self.coin_change(n-coin_array[i], coin_array)
         
         # append to cache
         self.coin_change_memo[n][len(coin_array)] = result
         
         #return result
-        return len(result)
+        return result
 
