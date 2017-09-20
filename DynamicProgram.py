@@ -79,16 +79,14 @@ class DynamicProgram(object):
         # be able to recognize and call these solutions in the coin_change memo
         if n in self.coin_change_memo:
             if len(coin_array) in self.coin_change_memo[n]:
-                print("n :",n)
-                print("len(coin_array) :", len(coin_array))
-                return [n][len(coin_array)]
+                return self.coin_change_memo[n][len(coin_array)]
         
         # base cases
         # you can't have negative coin values so return 0 if "n" goes below 0
         # 0 and 1 return 1 because there is only way to organize the values
         # in the coin array (assuming the coin array includes 1) to return
         # these n values 
-        if n < 0:
+        if n < 0 or len(coin_array ) == 0:
             # print("0 returned")
             return 0
         elif n == 1 or n == 0:
@@ -102,16 +100,11 @@ class DynamicProgram(object):
         result = 0
         
         # backtracking (the backbone of how this function works)
-        # iterate through the values in the coin_array to
-        # currently
-        for i in range(len(coin_array)):
-            # print("backtrack n = "+str(n))
-            # print("backtrack coin_array = "+str(coin_array))
-            result += self.coin_change(n-coin_array[i], coin_array)
+        # iterate through the values in the coin_array
+        result += self.coin_change(n-coin_array[0], coin_array) #-self.coin_change(n,coin_array[1:])
         
         # append to cache
         self.coin_change_memo[n][len(coin_array)] = result
         
         #return result
         return result
-
