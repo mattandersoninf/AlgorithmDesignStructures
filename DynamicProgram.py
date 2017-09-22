@@ -68,7 +68,7 @@ class DynamicProgram(object):
     # return an integer of the number of combinaions you can arrange a coin 
     # array to add up to n before you try using a coin_list as a key,
     # it's not possible because lists are unhashable
-    # so it is up the user to please use coins in ascending value
+    # so it is up the user to please use coins in descending value
     # you can also assume you have an unlimited amount of every coin in coin_array
     # ex: if len(coin_array) == 2, the input should be coin_array = [1,5]    
     def coin_change(self, n, coin_array):
@@ -86,11 +86,9 @@ class DynamicProgram(object):
         # 0 and 1 return 1 because there is only way to organize the values
         # in the coin array (assuming the coin array includes 1) to return
         # these n values 
-        if n < 0 or len(coin_array ) == 0:
-            # print("0 returned")
+        if n < 0:
             return 0
         elif n == 1 or n == 0:
-            # print("1 returned")
             return 1
         
         # result will adjust to the number of arrays returned from backtracking
@@ -98,10 +96,13 @@ class DynamicProgram(object):
         # the arrays for the possible solutions granted the return array have the
         # potential to become very large
         result = 0
+        i = 0
         
         # backtracking (the backbone of how this function works)
         # iterate through the values in the coin_array
-        result += self.coin_change(n-coin_array[0], coin_array) #-self.coin_change(n,coin_array[1:])
+        while i < len(coin_array) and i <= n:
+            result += self.coin_change(n-coin_array[i], coin_array[i:]) # + self.coin_change(n,coin_array[i+1:])
+            i += 1
         
         # append to cache
         self.coin_change_memo[n][len(coin_array)] = result
