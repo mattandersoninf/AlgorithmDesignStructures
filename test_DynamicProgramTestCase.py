@@ -13,12 +13,13 @@ class FiboncciTestCase(unittest.TestCase):
     def test_fib100(self):
         assert self.dynProgObj.fib(100) == 354224848179261915075
     def test_climb_stairs_4_3(self):
-        # permutations = {[1,1,1,1],[1,1,2],[1,2,1],[2,1,1],[2,2],[1,3],[3,1]}
+        # permutations = {[1,1,1,1],[1,1,2],[1,2,1],[1,3],[2,1,1],[2,2],[3,1]}
         # answer = len(permutations) = 7
         assert self.dynProgObj.climb_stairs(4,3) == 7
-    def test_climbs_stairs_7_3(self):
-        # answer = len(permutations) = 
-        assert self.dynProgObj.climb_stairs(7,3) == 44
+        # permutations = {[1,1,1,1,1],[1,1,1,2],[1,1,2,1],[1,1,3],[1,2,1,1],[1,2,2],[1,3,1],[2,1,1,1],[2,1,2],[2,2,1],[2,3],[3,1,1],[3,2]}
+        # answer = len(permutations) = 13
+    def test_climbs_stairs_5_3(self):
+        assert self.dynProgObj.climb_stairs(5,3) == 13
     
     
     def test_coin_change(self):

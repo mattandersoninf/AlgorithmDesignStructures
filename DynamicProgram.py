@@ -1,5 +1,4 @@
-# python implementation of dynamic progrmming
-# first method include Fibonacci implementation
+# python implementation of essential dynamic progrmming practices
 
 # import this class to have access to defaultdict
 import collections as c
@@ -13,7 +12,7 @@ class DynamicProgram(object):
         self.__dict__.update({x:k for x, k in locals().items() if x != 'self'})
         
     # basic implementation of dynamic programming by returning the fibonnaci
-    # of an 
+    # of an integer n
     def fib(self,n):
         # Check cache
         if n in self.fib_memo:return self.fib_memo[n]
