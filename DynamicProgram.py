@@ -112,18 +112,18 @@ class DynamicProgram(object):
     # given 2 string find the length of the longest subsequence that is shared by both
     # inputs include 2 strings and indexes
     def longestSubsequence(self, string1, string2):
-        if len(string1) == 0 or len(string2) == 0: return 0
         len1 = len(string1)
         len2 = len(string2)
-        L = [[0]*(len1+1) for i in range(len2+1)]
-        print('\n',string1, string2,L)
+        L = [[None]*(len2+1) for i in range(len1+1)]
         # using len1 + 1 and len2 +1 as the ranges you to have access to the base case
         # where you're looking at 2 empty strings and can still look at all of the characters
         # in both strings
         for i in range(len1 + 1):
             for j in range(len2 + 1):
-                if i == 0 or j == 0: L[i][j] == 0
-                elif string1[i-1] == string2[j-1]: L[i][j] = 1 + L[i-1][j-1]
-                else: L[i][j] = max(L[i-1][j], L[i][j-1])
+                if i == 0 or j == 0 : L[i][j] = 0
+                elif [i-1] == [j-1]: L[i][j] = L[i-1][j-1]+1
+                else: L[i][j] = max(L[i-1][j] , L[i][j-1])
         return L[len1][len2]
         
+    
+    
