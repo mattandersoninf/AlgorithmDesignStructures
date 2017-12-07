@@ -1,6 +1,7 @@
 # demonstrate pritority que data structure in python
 
 import collections
+# call the graph class to make use of the vertex object
 import Graph
 
 class PriorityQueue:
