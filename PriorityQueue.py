@@ -24,3 +24,15 @@ def AStar(start, val_to_find):
                 queue.push(priority, vertex)
     return False
             
+def djstrika(start, val_to_find):
+    if start is None or val_to_find is None: return False
+    queue = PriorityQueue()
+    queue.append(start)
+    while queue:
+        if current_vertex.value == val_to_find: return True
+        if not current_vertex.visited:
+            current_vertex.visited = True
+            for dist, vertex in current_vertex.neighbors:
+                vertex.distance = current_vetex.distance + dist
+                queue.push(vertex.distance, vertex)
+    return False
