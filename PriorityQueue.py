@@ -8,6 +8,9 @@ class PriorityQueue:
     def __init__(self):
         self.__dict__.update({x:k for x, k in locals().items() if x != 'self'})
     
+    def append(self, value):
+    def pop(self):
+    def push(self):
     
 def AStar(start, val_to_find):
     if start is None or val_to_find is None: return False
