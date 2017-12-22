@@ -12,3 +12,5 @@ class PriorityQueueTestCase(unittest.TestCase):
         
         
     def testGetMinPath(self):
+        
+    def testFetAllPaths(self):
