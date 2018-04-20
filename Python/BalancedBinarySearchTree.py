@@ -1,32 +1,30 @@
 # python implementation of balanced binary search tree
 
-class Node:
+class node:
     # intialize node class with an intial value, and predefined left child, right child, and parent values
     # the parent is fo rthe sake of the deletion method in the tree class
-    def __init__(self, val, left=None, right=None, parent = None):
+    def __init__(self, value=None):
     # rather than type out each defined attribute of the class, using a dictionary combined with a magic method
     # accomplishes the same task with only a single line
-        self.__dict__.update({x:k for x, k in locals().items() if x != 'self'})
-    
+        # self.__dict__.update({x:k for x, k in locals().items() if x != 'self'})
+        self.value = value
+        self.left = None
+        self.right = None
+
     # getters and setters for the node attributes
-    def getValue(self): return self.val
+    def getValue(self): return self.value
     def getLeftChild(self): return self.left
     def getRightChild(self): return self.right
-    def getParent(self): return self.parent
-    def setValue(self, newVal): self.val = newVal
-    def setLeftChild(self, newVal): self.left = newVal
-    def setRightChild(self, newVal): self.right = newVal
-    def setParent(self, newVal): self.parent = newVal
-    # return an array of all the attributes that belong to the node
-    def getAll(self): return [self.val, self.left, self.right, self.parent]
 
-class Tree():
+
+class binary_search_tree():
     # intialize a tree with a root value and use the dictionary and magic methods approach to store the attribute
     # could expand further if you wish
     # you should intialize the tree with a Node object
-    def __init__(self, root):
-        self.__dict__.update({x:k for x, k in locals().items() if x != 'self'})
-      
+    def __init__(self):
+        # self.__dict__.update({x:k for x, k in locals().items() if x != 'self'})
+        self.root = None
+
     # return the root of the tree
     def getRoot(self):
         return self.root
@@ -34,25 +32,43 @@ class Tree():
     # set the value of the tre's root
     def setRoot(self, newNode):
         self.root = newNode
-      
+    
+    def height(self):
+        if self.root != None:
+            return self._height(self.root,0)
+
+    def _height(self, cur_node, cur_height):
+        if cur_node == None : return cur_height
+        left_height = self_height(cur_node.left, cur_height+1)
+        right_height = self._height(cur_node.right, cur_height+1)
+        return max(cur_height, left_height, right_height)
+
+
+
     # insert a new value into the binary search tree
-    def insert(self, root, newNode):
-        if self.search(root.val) != None:
-            if root == None:
-                root = newNode
-            else:
-                if root.val < newNode.val:
-                    if root.right is None:
-                        root.right = newNode
-                        root.right.parent = root
-                    else: self.insert(root.right, newNode)
-                else:
-                    if root.left is None:
-                        root.left = newNode
-                        root.left.parent = root
-                    else: self.insert(root.left, newNode)
+    def insert(self, value):
+        if self.root==None:
+            self.root = node(value)
         else:
-            print(str(newNode.val) + " is already in the tree.")
+            self._insert(value, self.root)
+
+    # if you need to insert a node past the root, follow this function
+    def _insert(self, value, cur_node):
+        if cur_node.value > value:
+            if cur_node.left==None:
+                cur_node.left = node(value)
+            else:
+                self._insert(value, cur_node.left)
+        elif cur_node.value < value:
+            if cur_node.right==None:
+                cur_node.right = node(value)
+            else:
+                self._insert(value, cur_node.right)
+        else:
+            print "This value is already in the tree!"
+
+    def
+
     
     
        
