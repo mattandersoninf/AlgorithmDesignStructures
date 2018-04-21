@@ -44,7 +44,6 @@ class binary_search_tree():
         return max(cur_height, left_height, right_height)
 
 
-
     # insert a new value into the binary search tree
     def insert(self, value):
         if self.root==None:
@@ -65,11 +64,7 @@ class binary_search_tree():
             else:
                 self._insert(value, cur_node.right)
         else:
-            print "This value is already in the tree!"
-
-    def
-
-    
+            print "This value is already in the tree!"    
     
        
     # search for whether or not a value is in the tree
@@ -93,7 +88,7 @@ class binary_search_tree():
                 return self.search(searchVal, currNode.right)
       
     # delete a value from the tree
-    def deleteVal(self, root, delVal):
+    def delete(self, root, delVal):
         # initialize holders for the left and right children in case the node your
         # deleting has children
         leftHold = None
