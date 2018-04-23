@@ -3,7 +3,7 @@
 class node:
     # intialize node class with an intial value, and predefined left child, right child, and parent values
     # the parent is fo rthe sake of the deletion method in the tree class
-    def __init__(self, value=None):
+    def __init__(self, value = None):
     # rather than type out each defined attribute of the class, using a dictionary combined with a magic method
     # accomplishes the same task with only a single line
         # self.__dict__.update({x:k for x, k in locals().items() if x != 'self'})
@@ -68,24 +68,24 @@ class binary_search_tree():
     
        
     # search for whether or not a value is in the tree
-    def search(self, searchVal, currNode = None):
-        # start by checking if you're looking at nothing, if so, point to the root of your tree
-        if currNode == None:
-            currNode = self.root
-        if currNode == None:
-            return None
+    def search(self, value):
+        if self.root != None:
+            # start by checking if you're looking at nothing, if so, point to the root of your tree
+            self._search(self.root, value)
         else:
-            # if the value of the node that you are currently looking at is equal to the searchVal, return that node
-            if currNode.val == searchVal:
-                return currNode
-            elif currNode.val == None:
-                return None
-            # if the value of the current node is greater than the searchVal and the left child isn't empty, search that node's properties
-            elif currNode.val > searchVal and currNode.left != None:
-                return self.search(searchVal, currNode.left)
-            # if the value of the current node is greater than the searchVal and the right child isn't empty, search that node's properties
-            elif currNode.val < searchVal and currNode.right != None:
-                return self.search(searchVal, currNode.right)
+            return False
+
+    def _search(self, cur_node, value):
+        # be wary of what happens when the node you refer to is empty
+        if cur_node == None:
+            return False
+        if cur_node.value == value:
+            return True
+        elif cur_node.value > value:
+            self._search(cur_node.left, value)
+        elif cur_node.value < value:
+            self._search(cur_node.right, value)
+        return False
       
     # delete a value from the tree
     def delete(self, root, delVal):
