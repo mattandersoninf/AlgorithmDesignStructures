@@ -51,7 +51,18 @@ class binary_search_tree():
         else:
             self._insert(value, self.root)
 
+    ##############################################################################################################################
     # if you need to insert a node past the root, follow this function
+    ##############################################################################################################################
+    # if the value of the current node that you're looking at is greater than the value you're attempting to insert
+    # check the left child, if it is empty, you place the node of the value in as the left child of the current node
+    ##############################################################################################################################
+    # else if the value of current node that you're currently looking at is less than the value you're attempting to insert
+    # check the right child, if it is empty, you place the node of the value in as the right child of the current node
+    ##############################################################################################################################
+    # if you've surpassed noth the less than and greater than values, you can assume that you are looking at a node with the same
+    # value as the one that you're currently looking at, in which case, tell the user that the value is already in the tree
+    ##############################################################################################################################
     def _insert(self, value, cur_node):
         if cur_node.value > value:
             if cur_node.left==None:
@@ -66,24 +77,39 @@ class binary_search_tree():
         else:
             print "This value is already in the tree!"    
     
-       
+    
+    ###############################################################################################################################   
     # search for whether or not a value is in the tree
+    ###############################################################################################################################
+    # check to see if the root is empty, if not, use the secondary search function with the root as the cur_node parameter
+    ###############################################################################################################################
     def search(self, value):
         if self.root != None:
             # start by checking if you're looking at nothing, if so, point to the root of your tree
             self._search(self.root, value)
         else:
             return False
+    ###############################################################################################################################
+    # call this function in the tree if your root doesn't give you what you need immediately
+    ###############################################################################################################################
+    # prioritize successful case first, if the current node has the value that you're looking for, return True
+    ###############################################################################################################################
+    # else if the current node that you are looking at is not empty and has a value that is greater than the value you're
+    # looking at, use the _search function seeting the current node to the left child
+    ###############################################################################################################################
+    # else if the current node that you are looking at is not empty and has a value that is less than the value you're
+    # looking at, use the _search function seeting the current node to the right child
+    ############################################################################################################################### 
+    # if you've gotten past the conditional statements, you can assume that you're looking at an empty node and therefore can
+    # return false
+    ############################################################################################################################### 
 
     def _search(self, cur_node, value):
-        # be wary of what happens when the node you refer to is empty
-        if cur_node == None:
-            return False
         if cur_node.value == value:
             return True
-        elif cur_node.value > value:
+        elif cur_node != None and cur_node.value > value:
             self._search(cur_node.left, value)
-        elif cur_node.value < value:
+        elif cur_node != None and cur_node.value < value:
             self._search(cur_node.right, value)
         return False
       
