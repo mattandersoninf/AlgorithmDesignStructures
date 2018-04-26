@@ -7,9 +7,10 @@ class node:
     # rather than type out each defined attribute of the class, using a dictionary combined with a magic method
     # accomplishes the same task with only a single line
         # self.__dict__.update({x:k for x, k in locals().items() if x != 'self'})
-        self.value = value
-        self.left = None
-        self.right = None
+        self.value = value # initialized value of node
+        self.left = None # pointer to child with lesser value
+        self.right = None # pointer to child node with greater value
+        self.parent = None # pointer to parent
 
     # getters and setters for the node attributes
     def getValue(self): return self.value
@@ -19,19 +20,9 @@ class node:
 
 class binary_search_tree():
     # intialize a tree with a root value and use the dictionary and magic methods approach to store the attribute
-    # could expand further if you wish
-    # you should intialize the tree with a Node object
     def __init__(self):
         # self.__dict__.update({x:k for x, k in locals().items() if x != 'self'})
         self.root = None
-
-    # return the root of the tree
-    def getRoot(self):
-        return self.root
-      
-    # set the value of the tre's root
-    def setRoot(self, newNode):
-        self.root = newNode
     
     def height(self):
         if self.root != None:
@@ -75,7 +66,26 @@ class binary_search_tree():
             print "This value is already in the tree!"    
     
     """
-    1. search for whether or not a value is in the tree,check to see if the root is empty, if not, use the secondary search function with the root as the cur_node parameter
+    return the node object from a tree given a value
+    """
+    def find(self, value):
+        if self.root != None:
+            self._find(self, root, cur_node)
+        else:
+            return False
+
+
+    def _find(self, cur_node, value):
+        if cur_node.value == value:
+            return cur_node
+        elif cur_node.left != None and cur_node.value > value:
+            self._find(self, cur_node.left, value)
+        elif cur_node.right != None and cur_node.value < value:
+            self._find(self, cur_node.right, value)
+        return False
+
+    """
+    return boolean of whether a value is in the tree 
     """
     def search(self, value):
         if self.root != None:
@@ -106,7 +116,22 @@ class binary_search_tree():
     refer to https://www.youtube.com/watch?v=Zaf8EOVa72I for help
     1. delete a value from the tree
     """
+    """
     def delete(self, value):
+        if self.root != None:
+            self._delete(self,root,value)
+        else:
+            return False
+
+    def _delete(self, cur_node, value):
+        if cur_node.value == value:
+            
+        elif cur_node.left != None and cur_node.value > value:
+            self._delete(self, cur_node.left, value)
+        elif cur_node.right != None and cur_node.value < value:
+            self._delete(self, cur_node.right, value)
+        return False
+    """
         """
         # initialize holders for the left and right children in case the node your
         # deleting has children
