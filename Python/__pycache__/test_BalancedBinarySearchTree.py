@@ -3,6 +3,10 @@ import BalancedBinarySearchTree
 import unittest
 import pytest
 
+
+"""
+use this section for utilizing pytest
+"""
 # intial testing to prove insert, search, and delete functions work
 mainTree = Tree(Node(5))
 print(mainTree.root)
@@ -36,4 +40,10 @@ mainTree.delete(2)
 print("search 2's value is "+str(mainTree.search(2)))
 mainTree.insert(1)
 mainTree.search(1)
+"""
+
+
+
+"""
+use this section for testing with unittest
 """
