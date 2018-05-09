@@ -7,16 +7,30 @@ class node:
     # rather than type out each defined attribute of the class, using a dictionary combined with a magic method
     # accomplishes the same task with only a single line
         # self.__dict__.update({x:k for x, k in locals().items() if x != 'self'})
-        self.value = value # initialized value of node
-        self.left = None # pointer to child with lesser value
-        self.right = None # pointer to child node with greater value
-        self.parent = None # pointer to parent
+        self._value = value # initialized value of node
+        self._left = None # pointer to child with lesser value
+        self._right = None # pointer to child node with greater value
+        self._parent = None # pointer to parent
 
-    # getters and setters for the node attributes
-    def getValue(self): return self.value
-    def getLeftChild(self): return self.left
-    def getRightChild(self): return self.right
+    # getters for the node attributes (don't want to make setters because that's what the tree is for)
+    # in Python
 
+    @property
+    def value(self):
+        return self._value
+    
+    @property
+    def left(self):
+        return self._left
+    
+    @property
+    def right(self):
+        return self._right
+    
+    @property
+    def parent(self):
+        return self._parent
+    
 
 class binary_search_tree():
     # intialize a tree with a root value and use the dictionary and magic methods approach to store the attribute
