@@ -77,7 +77,7 @@ class binary_search_tree():
             else:
                 self._insert(value, cur_node.right)
         else:
-            print "This value is already in the tree!"    
+            print ("This value is already in the tree!")    
     
     """
     return the node object from a tree given a value
@@ -146,6 +146,7 @@ class binary_search_tree():
             self._delete(self, cur_node.right, value)
         return False
     """
+    
         """
         # initialize holders for the left and right children in case the node your
         # deleting has children
@@ -200,5 +201,7 @@ class binary_search_tree():
             self.postorder(root.left)
             self.postorder(root.right)
             print(root.val)
+
+
 
 

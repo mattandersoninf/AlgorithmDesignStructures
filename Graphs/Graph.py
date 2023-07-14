@@ -143,4 +143,86 @@ class Graph(object):
             vertex.setVisitFalse()
     
     # def djstrika(self, vertex, value):
+    
+"""
+    class Graph:
+    def __init__(self):
+        self.graph = {}
+
+    def add_vertex(self, vertex):
+        if vertex not in self.graph:
+            self.graph[vertex] = {}
+
+    def add_edge(self, source, destination, weight):
+        if source in self.graph and destination in self.graph:
+            self.graph[source][destination] = weight
+
+    def get_vertices(self):
+        return list(self.graph.keys())
+
+    def get_edges(self):
+        edges = []
+        for vertex in self.graph:
+            for neighbor, weight in self.graph[vertex].items():
+                edges.append((vertex, neighbor, weight))
+        return edges
+
+    def __str__(self):
+        graph_str = ""
+        for vertex in self.graph:
+            graph_str += f"{vertex}: "
+            graph_str += ", ".join(f"{neighbor}:{weight}" for neighbor, weight in self.graph[vertex].items())
+            graph_str += "\n"
+        return graph_str
+
+    def depth_first_search(self, start_vertex):
+        visited = set()  # Set to keep track of visited vertices
+        self._dfs_helper(start_vertex, visited)
+
+    def _dfs_helper(self, vertex, visited):
+        visited.add(vertex)
+        print(vertex, end=" ")  # Process the vertex
+        for neighbor in self.graph[vertex]:
+            if neighbor not in visited:
+                self._dfs_helper(neighbor, visited)
+
+    def breadth_first_search(self, start_vertex):
+        visited = set()  # Set to keep track of visited vertices
+        queue = [start_vertex]  # Queue for BFS traversal
+        visited.add(start_vertex)
+
+        while queue:
+            vertex = queue.pop(0)
+            print(vertex, end=" ")  # Process the vertex
+            for neighbor in self.graph[vertex]:
+                if neighbor not in visited:
+                    queue.append(neighbor)
+                    visited.add(neighbor)
+
+    def dijkstra(self, start_vertex):
+        distances = {vertex: float('inf') for vertex in self.graph}  # Initialize distances with infinity
+        distances[start_vertex] = 0
+
+        visited = set()  # Set to keep track of visited vertices
+
+        while len(visited) < len(self.graph):
+            # Find the vertex with the minimum distance among unvisited vertices
+            min_distance = float('inf')
+            min_vertex = None
+            for vertex in self.graph:
+                if vertex not in visited and distances[vertex] < min_distance:
+                    min_distance = distances[vertex]
+                    min_vertex = vertex
+
+            visited.add(min_vertex)  # Mark the vertex as visited
+
+            # Update the distances of neighboring vertices
+            for neighbor, weight in self.graph[min_vertex].items():
+                distance = distances[min_vertex] + weight
+                if distance < distances[neighbor]:
+                    distances[neighbor] = distance
+
+        return distances
+        
+""" 
         
